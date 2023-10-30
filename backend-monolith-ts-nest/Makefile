@@ -22,12 +22,12 @@ mysql:
 # DB: CREATE DATABASE
 createdb:
 	docker exec -it postgres16 createdb --username=root --owner=root $(DB_NAME)
+	make migrateup
 
 # DB: DROP DATABASE && DB: CREATE DATABASE && DB: Migration: UP
 dropdb:
 	docker exec -it postgres16 dropdb $(DB_NAME)
 	make createdb
-	make migrateup
 
 # DB: Migration: UP
 migrateup:
