@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { PingService } from './ping.service';
 
 // Main Route
@@ -10,6 +10,11 @@ export class PingController {
   // Sub Route: v1/ping/{sub-route}
   @Get()
   getPing() {
+    return this.pingService.getPing();
+  }
+
+  @Post()
+  postPing() {
     return this.pingService.getPing();
   }
 }
