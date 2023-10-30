@@ -8,14 +8,18 @@
       <NuxtLink to="/dashboard">Админ</NuxtLink>
       <ul>
         <li><NuxtLink to="/dashboard/category">Категории</NuxtLink></li>
+        <li>
+          <NuxtLink to="/dashboard/category/create"
+            >Категории - добавить</NuxtLink
+          >
+        </li>
       </ul>
     </li>
-    <li><theme_switcher /></li>
   </ul>
 
   <main>
     <slot />
   </main>
 
-  <footer>&copy; 2023 &mdash; супер сайт v 0.0.4</footer>
+  <footer>&copy; 2023 &mdash; супер сайт v 0.1.3</footer>
 </template>
