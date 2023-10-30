@@ -15,6 +15,16 @@ class CategoryV1Repository {
     return plainToInstance(CategoryV1NameModel, databaseResponse.rows);
   }
 
+  async getById(id: string) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+      SELECT * FROM category_name WHERE id = $1
+    `,
+      [id],
+    );
+    return plainToInstance(CategoryV1NameModel, databaseResponse.rows);
+  }
+
   async create(postData: CreateDTO) {
     const databaseResponse = await this.databaseService.runQuery(
       `

@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CategoryV1Service } from './category-v1.service';
+import CreateDTO from './create.dto';
 
 @Controller('v1/category')
 export class CategoryV1Controller {
@@ -10,8 +11,13 @@ export class CategoryV1Controller {
     return this.categoryV1Service.get();
   }
 
-  @Get('create')
-  create() {
-    return this.categoryV1Service.create();
+  @Get('get/:id')
+  getById(@Param('id') id: string) {
+    return this.categoryV1Service.getById(id);
+  }
+
+  @Post('create')
+  create(@Body() createDto: CreateDTO) {
+    return this.categoryV1Service.create(createDto);
   }
 }
