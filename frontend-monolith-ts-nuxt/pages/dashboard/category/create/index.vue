@@ -1,34 +1,40 @@
-<script setup lang="ts">
-import { reactive } from "vue";
-
-const formData = reactive({
-  name: "",
-});
-
-const handleSubmit = (event: any) => {
-  console.log(event);
-
-  // const result = await useFetch("utl", {
-  //   method: "POST",
-  // });
-
-  return;
-};
-</script>
-
 <template>
-  <h1>Создать категорию</h1>
-
-  <form @submit.prevent="handleSubmit">
-    <input
-      v-model="formData.name"
-      type="text"
-      name="name"
-      placeholder="Имя категории"
-      required
-      autocomplete="off"
-    />
-    <p></p>
-    <button type="submit">Создать</button>
+  <form>
+    <textarea
+      placeholder="Type something..."
+      v-model="form.name"
+      spellcheck="false"
+    ></textarea>
+    <button type="button" @click="handleSubmit">Send data</button>
   </form>
 </template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      form: {
+        name: "",
+      },
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      const { data: response } = await useFetch(
+        "http://localhost:3001/v1/category/create",
+        {
+          method: "post",
+          body: {
+            name: this.form.name,
+          },
+        }
+      );
+
+      if (response) {
+        alert(response.value);
+      }
+    },
+  },
+};
+</script>
