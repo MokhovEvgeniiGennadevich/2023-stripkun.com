@@ -3,8 +3,7 @@
     <textarea
       placeholder="Type something..."
       v-model="form.name"
-      spellcheck="false"
-    ></textarea>
+      spellcheck="false"></textarea>
     <button type="button" @click="handleSubmit">Send data</button>
   </form>
 </template>

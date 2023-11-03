@@ -1,5 +1,7 @@
 -- Add UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Add LTREE extension
+CREATE EXTENSION IF NOT EXISTS "ltree";
 
 CREATE TABLE IF NOT EXISTS "category" (
   "id" uuid PRIMARY KEY DEFAULT uuid_generate_v4()
@@ -14,6 +16,14 @@ CREATE TABLE IF NOT EXISTS "category_name" (
   "id" uuid PRIMARY KEY NOT NULL,
   "name" varchar NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS "category_pid" (
+  "id" uuid PRIMARY KEY NOT NULL,
+  "pid" ltree
+);
+
+CREATE INDEX pid_gist_idx ON category_pid USING GIST (pid);
+CREATE INDEX pid_btree_idx ON category_pid USING BTREE (pid);
 
 CREATE TABLE IF NOT EXISTS "category_seo" (
   "id" uuid PRIMARY KEY NOT NULL,
