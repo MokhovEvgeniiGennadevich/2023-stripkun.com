@@ -1,32 +1,52 @@
 <script setup lang="ts">
-type catDto = {
-  id: number;
+type categoryDto = {
+  id: string;
   name: string;
+  pid: string | null;
 };
 
-const { pending, data: categories } = await useFetch<catDto[]>(
+const { data: categories } = await useFetch<categoryDto[]>(
   "http://localhost:3001/v1/category/get"
 );
+
+// const categoriesTree = categoriesLtree(categories.value);
+
+// Решение от fukushine
+const categoriesTree = computed(() => categoriesLtree(categories.value))
 </script>
 
 <template>
   <h1>Статьи дохода и расхода</h1>
+
   <NuxtLink to="/dashboard/category/create">Добавить</NuxtLink>
 
-  <div v-if="pending">Loading ...</div>
-  <div v-else>
-    <div v-for="category in categories" class="list">
-      <div>{{ category.name }}</div>
-      <div>
-        <NuxtLink :to="`/dashboard/category/edit/${category.id}`"
-          >[edit]</NuxtLink
-        >
-      </div>
-      <div>[delete]</div>
-    </div>
-  </div>
+  <ul>
+    <li v-for="(category, index) in categoriesTree" :key="`first-${index}`">
+      <NuxtLink :to="`/dashboard/category/edit/${category.id[0]}`">
+        {{ category.name[0] }}
+      </NuxtLink>
+      <template v-if="category.name[1]">
+        <ul>
+          <li>
+            <NuxtLink :to="`/dashboard/category/edit/${category.id[1]}`">
+              {{ category.name[1] }}
+            </NuxtLink>
+            <template v-if="category.name[2]">
+              <ul>
+                <li>
+                  <NuxtLink :to="`/dashboard/category/edit/${category.id[2]}`">
+                    {{ category.name[2] }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </template>
+          </li>
+        </ul>
+      </template>
+    </li>
+  </ul>
 </template>
-
+ 
 <style>
 .list {
   display: flex;
