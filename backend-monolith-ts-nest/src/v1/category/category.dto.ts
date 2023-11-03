@@ -9,4 +9,8 @@ export class CategoryUpdateDTO {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  pid: string;
 }
