@@ -1,6 +1,5 @@
 <template>
   <ul>
-    <li>Menu</li>
     <li><NuxtLink to="/">Главная</NuxtLink></li>
     <li><NuxtLink to="/version">Версия</NuxtLink></li>
     <li><NuxtLink to="/about">About</NuxtLink></li>
