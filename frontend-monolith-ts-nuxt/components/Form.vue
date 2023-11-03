@@ -1,24 +1,62 @@
 <script setup lang="ts">
-// Получаем props используя <script setup>
-// Options API либо Composition API
-const props = defineProps(["category"]);
+// Get Props
+const props = defineProps(["category", "categories"]);
 
-const category = props.category[0];
+const category = props.category;
+const categories = props.categories;
 
-function handleSubmit() {
-  alert(JSON.stringify(category));
+// Form
+
+// Define default value
+const formData = ref({
+  id: category.id,
+  name: category.name,
+  pid: category.pid
+})
+
+async function handleSubmit() {
+  console.log(formData.value)
+
+  const { data: response } = await useFetch(
+    "http://localhost:3001/v1/category/update",
+    {
+      method: "put",
+      body: {
+        id: formData.value.id,
+        name: formData.value.name,
+        pid: formData.value.pid
+      }
+    }
+  )
+
 }
 </script>
 
 <template>
-  <h1>Props: {{ category }}</h1>
-
   <form @submit.prevent="handleSubmit">
-    <input type="hidden" id="id" v-model="category.id" autocomplete="off" />
+    <input type="hidden" name="id" v-model="formData.id" autocomplete="off" />
+    <input type="text" name="name" v-model="formData.name" autocomplete="off" />
+    <select v-model="formData.pid">
+      <template v-if="category.pid === null">
+        <option :value="null" selected>Без категории</option>
+      </template>
+      <template v-else>
+        <option :value="null">Без категории</option>
+      </template>
 
-    <label for="name">Name:</label>
-    <input type="text" id="name" v-model="category.name" autocomplete="off" />
+      <template v-for="(category, index) in categories" :key="`first-${index}`">
+        <option :value="category.id[category.id.length - 1]">
+          {{ category.name[0] }}
 
+          <template v-if="category.name[1]">
+            - {{ category.name[1] }}
+            <template v-if="category.name[2]">
+              - {{ category.name[2] }}
+            </template>
+          </template>
+        </option>
+      </template>
+    </select>
     <button type="submit">Submit</button>
   </form>
 </template>
