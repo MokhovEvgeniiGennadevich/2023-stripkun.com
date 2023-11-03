@@ -40,6 +40,19 @@ class CategoryV1Repository {
     );
     return plainToInstance(CategoryV1Repository, databaseResponse.rows[0]);
   }
+
+  async update(postData: CategoryV1NameModel) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+      UPDATE category_name
+      SET name = $1
+      WHERE id = $2
+      RETURNING *
+    `,
+      [postData.name, postData.id],
+    );
+    return plainToInstance(CategoryV1NameModel, databaseResponse.rows[0]);
+  }
 }
 
 export default CategoryV1Repository;

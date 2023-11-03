@@ -1,6 +1,7 @@
 import { Body, Injectable } from '@nestjs/common';
 import CategoryV1Repository from './category-v1.repository';
 import CreateDTO from './create.dto';
+import { CategoryUpdateDTO } from './category.dto';
 
 @Injectable()
 export class CategoryV1Service {
@@ -19,5 +20,9 @@ export class CategoryV1Service {
       id: crypto.randomUUID(),
       name: createDto.name,
     });
+  }
+
+  update(@Body() categoryUpdateDto: CategoryUpdateDTO) {
+    return this.categoryV1Repository.update(categoryUpdateDto);
   }
 }
