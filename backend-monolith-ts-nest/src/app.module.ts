@@ -6,10 +6,14 @@ import { PingService } from './v1/ping/ping.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import DatabaseModule from './database.module';
 import { CategoryV1Module } from './v1/category/category-v1.module';
+import { BudgetV1Module } from './v1/budget/budget-v1.module';
 
 @Module({
   imports: [
+    // Modules
     CategoryV1Module,
+    BudgetV1Module,
+
     DatabaseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
