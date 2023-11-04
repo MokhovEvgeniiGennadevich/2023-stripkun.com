@@ -38,4 +38,7 @@ migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
+migratefix:
+	migrate -path db/migration -database "$(DB_URL)" -verbose force 1
+
 .PHONY: migrateup migratedown run createdb dropdb 
