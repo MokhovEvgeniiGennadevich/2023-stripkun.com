@@ -33,4 +33,5 @@ nest g module [name]
 
 ```sh
 nest g controller categoryV1 && nest g service categoryV1 && nest g module categoryV1
+nest g controller budgetV1 && nest g service budgetV1 && nest g module budgetV1
 ```
