@@ -6,7 +6,7 @@ type categoryDto = {
 };
 
 const { data: categories } = await useFetch<categoryDto[]>(
-  "http://localhost:3001/v1/category/get"
+  "http://localhost:3001/v1/category/get",
 );
 
 // const categoriesTree = categoriesLtree(categories.value);
@@ -16,7 +16,7 @@ const categoriesTree = computed(() => categoriesLtree(categories.value))
 </script>
 
 <template>
-  <h1>Статьи дохода и расхода</h1>
+  <h1>Категории дохода и расхода</h1>
 
   <NuxtLink to="/dashboard/category/create">Добавить</NuxtLink>
 
