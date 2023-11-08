@@ -21,15 +21,21 @@ const { data: categoriesFetch } = await useFetch<categoryDto[]>(
 );
 
 const handleSubmit = async () => {
-  alert(JSON.stringify(formData.value))
+  // Convert data
+  const conver = {
+    summ: Number(formData.value.summ),
+    date: formData.value.date,
+  }
+
+  alert(JSON.stringify(conver))
 
   const { data: response } = await useFetch(
     "http://localhost:3001/v1/budget/create",
     {
       method: "post",
       body: {
-        summ: formData.value.summ,
-        date: formData.value.date,
+        summ: conver.summ,
+        date: conver.date,
         categoryId: formData.value.categoryId,
         note: formData.value.note
       }
@@ -42,12 +48,12 @@ const handleSubmit = async () => {
 // Решение от fukushine
 const categories = computed(() => categoriesLtree(categoriesFetch.value))
 
+
+
 </script>
 
 <template>
   <h1>Внести доход или расход</h1>
-
-  {{ date }}
 
   <form @submit.prevent="handleSubmit">
     <input type="text" placeholder="Сумма" v-model="formData.summ" autocomplete="off" />
