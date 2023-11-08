@@ -1,7 +1,8 @@
 import { Body, Injectable } from '@nestjs/common';
 import CategoryV1Repository from './category-v1.repository';
-import CreateDTO from './create.dto';
-import { CategoryUpdateDTO } from './category.dto';
+import { CategoryUpdateV1DTO, CreateCategoryV1DTO } from './category.dto';
+
+// Business Logic Here
 
 @Injectable()
 export class CategoryV1Service {
@@ -15,14 +16,11 @@ export class CategoryV1Service {
     return this.categoryV1Repository.getById(id);
   }
 
-  create(@Body() createDto: CreateDTO) {
-    return this.categoryV1Repository.create({
-      id: crypto.randomUUID(),
-      name: createDto.name,
-    });
+  create(@Body() createCategoryV1DTO: CreateCategoryV1DTO) {
+    return this.categoryV1Repository.create(createCategoryV1DTO);
   }
 
-  update(@Body() categoryUpdateDto: CategoryUpdateDTO) {
+  update(@Body() categoryUpdateDto: CategoryUpdateV1DTO) {
     return this.categoryV1Repository.update(categoryUpdateDto);
   }
 }

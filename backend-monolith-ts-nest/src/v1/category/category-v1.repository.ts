@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import DatabaseService from 'src/database.service';
-import CreateDTO from './create.dto';
 import CategoryV1NameModel, {
   CategoryV1UpdateModel,
 } from './category-v1.model';
+import {
+  CreateCategoryResponseV1DTO,
+  CreateCategoryV1DTO,
+} from './category.dto';
+import { UUID } from 'crypto';
 
 @Injectable()
 class CategoryV1Repository {
@@ -12,6 +16,8 @@ class CategoryV1Repository {
 
   // get all categories from database
   async get() {
+    // Cache: Get
+
     // select categoryName
     const categoryResponse = await this.databaseService.runQuery(`
       SELECT category_name.id, category_name.name, category_pid.pid FROM category_name
@@ -59,21 +65,128 @@ class CategoryV1Repository {
     return plainToInstance(CategoryV1NameModel, responseResult);
   }
 
-  async create(postData: CreateDTO) {
-    const databaseResponse = await this.databaseService.runQuery(
-      `
-      
-      INSERT INTO category_name (
-        id,
-        name
-      ) VALUES (
-        $1,
-        $2
-      ) RETURNING *
-    `,
-      [postData.id, postData.name],
-    );
-    return plainToInstance(CategoryV1Repository, databaseResponse.rows[0]);
+  // Category: Create
+  async create(postData: CreateCategoryV1DTO) {
+    // Category Array
+    let category: CreateCategoryResponseV1DTO;
+
+    // Start Transaction
+    try {
+      const startTransaction = await this.databaseService.runQuery(`
+      START TRANSACTION;
+    `);
+
+      if (!startTransaction) {
+        return {
+          message: 'database',
+        };
+      }
+    } catch (error) {
+      return {
+        message: 'database',
+      };
+    }
+
+    // Get UUID
+
+    try {
+      const categoryResponse = await this.databaseService.runQuery(
+        `INSERT INTO category (id) VALUES (default) RETURNING id`,
+      );
+
+      if (!categoryResponse.rows[0].id) {
+        const rollbackTransaction = await this.databaseService.runQuery(`
+          ROLLBACK;
+        `);
+
+        if (!rollbackTransaction) {
+          return {
+            message: 'database',
+          };
+        }
+
+        return {
+          message: 'database',
+        };
+      }
+
+      category.id = categoryResponse.rows[0].id;
+    } catch (error) {
+      return {
+        message: 'database',
+      };
+    }
+
+    // Category Name, Category PID, Category Slug, Category DateTime
+
+    try {
+      const categoryNameResponse = await this.databaseService.runQuery(
+        `
+          INSERT INTO category_name (
+            id,
+            name
+          ) VALUES (
+            $1,
+            $2
+          ) RETURNING *
+        `,
+        [category.id, postData.name],
+      );
+
+      if (!categoryNameResponse.rows[0].name) {
+        const rollbackTransaction = await this.databaseService.runQuery(`
+          ROLLBACK;
+        `);
+
+        if (!rollbackTransaction) {
+          return {
+            message: 'database',
+          };
+        }
+
+        return {
+          message: 'database',
+        };
+      }
+
+      category.name = categoryNameResponse.rows[0].name;
+    } catch (error) {
+      return {
+        message: 'database',
+      };
+    }
+
+    // Commit Transaction
+
+    try {
+      const commitTransaction = await this.databaseService.runQuery(`
+        COMMIT;
+      `);
+
+      if (!commitTransaction) {
+        const rollbackTransaction = await this.databaseService.runQuery(`
+          ROLLBACK;
+        `);
+
+        if (!rollbackTransaction) {
+          return {
+            message: 'database',
+          };
+        }
+
+        return {
+          message: 'database',
+        };
+      }
+    } catch (error) {
+      return {
+        message: 'database',
+      };
+    }
+
+    // Remove Cache
+
+    return plainToInstance(CreateCategoryResponseV1DTO, category);
   }
 
   async update(postData: CategoryV1UpdateModel) {
