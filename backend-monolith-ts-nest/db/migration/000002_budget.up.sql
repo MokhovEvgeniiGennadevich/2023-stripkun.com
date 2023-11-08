@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS "budget_category" (
 
 CREATE TABLE IF NOT EXISTS "budget_date" (
   "id" uuid PRIMARY KEY NOT NULL,
-  "date" timestamp NOT NULL
+  -- https://postgrespro.ru/docs/postgresql/9.4/datatype-datetime
+  -- date: without time
+  "date" date NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "budget_note" (

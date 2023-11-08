@@ -34,6 +34,9 @@ CREATE TABLE IF NOT EXISTS "category_seo" (
 
 CREATE TABLE IF NOT EXISTS "category_time" (
   "id" uuid PRIMARY KEY NOT NULL,
+  -- https://postgrespro.ru/docs/postgresql/9.4/datatype-datetime
+  -- timestamp without time zone
+  -- timestamptz with time zone
   "createdAt" timestamp NOT NULL default(now()),
   "updatedAt" timestamp NOT NULL default(now())
 );
