@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import DatabaseService from 'src/database.service';
-import { CreateBudgetDtoV1 } from './budget.dto';
+import { CreateBudgetV1DTO } from './budget.dto';
 
 @Injectable()
 class BudgetV1Repository {
@@ -11,9 +11,10 @@ class BudgetV1Repository {
   async get() {
     // select categoryName
     const response = await this.databaseService.runQuery(`
-      SELECT id FROM budget
+      SELECT budget.id, summ, category_id, date, note FROM budget
+      LEFT JOIN budget_summ ON budget_summ.id = budget.id
       LEFT JOIN budget_category ON budget_category.id = budget.id
-      LEFT JOIN budget_time ON budget_time.id = budget.id
+      LEFT JOIN budget_date ON budget_date.id = budget.id
       LEFT JOIN budget_note ON budget_note.id = budget.id
     `);
 
@@ -26,7 +27,7 @@ class BudgetV1Repository {
     return response.rows;
   }
 
-  async create(createBudgetDtoV1: CreateBudgetDtoV1) {
+  async create(createBudgetV1Dto: CreateBudgetV1DTO) {
     const startTransaction = await this.databaseService.runQuery(`
       START TRANSACTION;
     `);
@@ -46,6 +47,12 @@ class BudgetV1Repository {
         ROLLBACK;
       `);
 
+      if (!rollbackTransaction) {
+        return {
+          message: 'database',
+        };
+      }
+
       return {
         message: 'error',
       };
@@ -59,7 +66,7 @@ class BudgetV1Repository {
       `
       SELECT id FROM category_name WHERE id = $1
       `,
-      [createBudgetDtoV1.categoryId],
+      [createBudgetV1Dto.categoryId],
     );
 
     if (categoryResponse.rows.length === 0) {
@@ -79,7 +86,7 @@ class BudgetV1Repository {
       VALUES ($1, $2)
       RETURNING *
       `,
-      [budgetId, createBudgetDtoV1.categoryId],
+      [budgetId, createBudgetV1Dto.categoryId],
     );
 
     if (!insertCategoryResponse.rows[0]) {
@@ -93,7 +100,7 @@ class BudgetV1Repository {
     }
 
     // Summ = Summ * 1000
-    const summ = createBudgetDtoV1.summ * 1000;
+    const summ = createBudgetV1Dto.summ * 1000;
 
     // Insert Summ
     const insertSummResponse = await this.databaseService.runQuery(
@@ -122,8 +129,28 @@ class BudgetV1Repository {
       VALUES ($1, $2)
       RETURNING *
       `,
-      [budgetId, createBudgetDtoV1.note],
+      [budgetId, createBudgetV1Dto.note],
     );
+
+    // Insert Date
+    const insertDateResponse = await this.databaseService.runQuery(
+      `
+      INSERT INTO budget_date (id, date)
+      VALUES ($1, $2)
+      RETURNING *
+      `,
+      [budgetId, createBudgetV1Dto.date],
+    );
+
+    if (!insertDateResponse.rows[0]) {
+      const rollbackTransaction = await this.databaseService.runQuery(`
+        ROLLBACK;
+      `);
+
+      return {
+        message: 'error',
+      };
+    }
 
     const commitTransaction = await this.databaseService.runQuery(`
       COMMIT;

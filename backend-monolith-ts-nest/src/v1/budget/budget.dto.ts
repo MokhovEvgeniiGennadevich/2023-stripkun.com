@@ -1,6 +1,13 @@
-import { IsDate, IsInt, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import {
+  IsDate,
+  IsDateString,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
-export class CreateBudgetDtoV1 {
+export class CreateBudgetV1DTO {
   @IsInt()
   @IsNotEmpty()
   summ: number;
@@ -9,7 +16,7 @@ export class CreateBudgetDtoV1 {
   @IsNotEmpty()
   categoryId: string;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   date: string;
 

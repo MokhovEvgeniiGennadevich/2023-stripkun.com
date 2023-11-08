@@ -1,6 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { BudgetV1Service } from './budget-v1.service';
-import { CreateBudgetDtoV1 } from './budget.dto';
+import { CreateBudgetV1DTO } from './budget.dto';
 
 @Controller('v1/budget')
 export class BudgetV1Controller {
@@ -12,7 +19,9 @@ export class BudgetV1Controller {
   }
 
   @Post('create')
-  create(@Body() createBudgetDtoV1: CreateBudgetDtoV1) {
-    return this.budgetV1Service.create(createBudgetDtoV1);
+  // Enable validation
+  @UsePipes(new ValidationPipe({ transform: true }))
+  create(@Body() createBudgetV1Dto: CreateBudgetV1DTO) {
+    return this.budgetV1Service.create(createBudgetV1Dto);
   }
 }
