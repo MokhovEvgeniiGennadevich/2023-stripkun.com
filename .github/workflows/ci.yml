@@ -22,14 +22,17 @@ jobs:
 
       # Install dependencies
       - name: install
+        working-directory: ./frontend-monolith-ts-nuxt
         run: npm install
 
       # Generate types after installing dependencies
       - name: postinstall
+        working-directory: ./frontend-monolith-ts-nuxt
         run: npm run postinstall
 
       - name: Sync Status
         run: git diff --exit-code
 
       - name: Build
+        working-directory: ./frontend-monolith-ts-nuxt
         run: npm run build
