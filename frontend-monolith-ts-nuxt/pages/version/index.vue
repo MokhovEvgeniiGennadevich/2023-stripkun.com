@@ -1,6 +1,19 @@
 <template>
   <h1>Лог версий</h1>
 
+  <h2>0.1.7 [2023-11-09]</h2>
+
+  <p>Feat: Pinia State: User</p>
+  <p>Feat: Sign In / Sign Up by Login</p>
+  <p>Fix: hash and hash_time generator</p>
+
+  <h2>0.1.6 [2023-11-08]</h2>
+
+  <p>Темная / Светлая темы</p>
+  <p>CSRF защита</p>
+  <p>HASH защита</p>
+  <p>Базовый State Management через Pinia</p>
+
   <h2>0.1.5</h2>
 
   <p>Записи дохода или расхода по категориям</p>
