@@ -21,6 +21,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "jwt-decode": "^4.0.0",
-    "pinia": "^2.1.7"
+    "pinia": "^2.1.7",
+    "vee-validate": "^4.5.8"
   }
 }

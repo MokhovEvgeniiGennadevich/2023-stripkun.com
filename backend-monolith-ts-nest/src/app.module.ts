@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import DatabaseModule from './database.module';
 import { CategoryV1Module } from './v1/category/category-v1.module';
 import { BudgetV1Module } from './v1/budget/budget-v1.module';
+import { UserV1Module } from './v1/user/user-v1.module';
+import { SignupByLoginV1Module } from './v1/auth/signup-by-login/signup-by-login-v1.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { BudgetV1Module } from './v1/budget/budget-v1.module';
     ConfigModule.forRoot({
       envFilePath: '.env.development.local',
     }),
+    UserV1Module,
+    SignupByLoginV1Module,
   ],
   // imports: [DatabaseModule],
   controllers: [AppController, PingController],

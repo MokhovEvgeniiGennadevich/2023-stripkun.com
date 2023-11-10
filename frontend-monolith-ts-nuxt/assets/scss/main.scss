@@ -1,0 +1,126 @@
+/////////////////////////////////////////////////////////////////////////
+// CSS Normalizer
+// https: //byby.dev/normalize-css
+
+// Correct the line height in all browsers. Prevent adjustments of font size after orientation changes in iOS.
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+// Remove the margin in all browsers.
+body {
+  margin: 0;
+}
+
+// Render the main element consistently in IE.
+main {
+  display: block;
+}
+
+// Correct the font size and margin on h1 elements within section and article contexts in Chrome, Firefox and Safari.
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+// Add the correct box sizing in Firefox, and show the overflow in Edge and IE.
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+// Correct the inheritance and scaling of font size in all browsers, and correct the odd em font sizing in all browsers.
+
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+// Remove the gray background on active links in IE 10.
+a {
+  background-color: transparent;
+}
+
+// Remove the bottom border in Chrome 57-, and add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+
+// Add the correct font weight in Chrome, Edge, and Safari.
+b,
+strong {
+  font-weight: bolder;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/// Variables
+
+:root {
+  --primary: #fff;
+  --secondary: #000;
+}
+
+html.dark-mode {
+  --primary: #000;
+  --secondary: #fff;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////
+
+h1 {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+html, body {
+  background-color: var(--primary);
+  color: var(--secondary);
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+a {
+  color: #00cc00;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+
+  .logo {
+    font-weight: bold;
+    font-size: 1rem;
+
+    a {
+      text-decoration: none;
+      color: #ebf4f1;
+
+      span {
+          color: #00cc00;
+          background-color: #ffffff7c;
+          padding: 0.1rem;
+          margin: 0.1rem;
+        }
+    }
+
+  }
+
+}
+
+main {
+  form {
+    input {
+      border: 3px solid #000;
+    }
+  }
+}

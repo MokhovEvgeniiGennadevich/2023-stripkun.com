@@ -9,14 +9,8 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
   ],
   css: ["~/assets/scss/main.scss"],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData:
-            '@use "@/assets/scss/_colors.scss" as *;',
-        },
-      },
-    },
+  routeRules: {
+    // Dashboard renders only on client-side
+    "/dashboard/**": { ssr: false },
   },
 });

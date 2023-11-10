@@ -7,15 +7,15 @@ type categoryDto = {
   pid: string | null;
 };
 
-const url = "http://localhost:3001/v1/category/get/" + route.params.id;
+const url = "/api/v1/category/get/" + route.params.id;
 
 const { data: category } = await useFetch<categoryDto>(url);
 
 const { data: categories } = await useFetch<categoryDto[]>(
-  "http://localhost:3001/v1/category/get"
+  "/api/v1/category/get"
 );
 
-// Решение от fukushine
+// Решение от satont aka fukushine
 const categoriesTree = computed(() => categoriesLtree(categories.value))
 </script>
 

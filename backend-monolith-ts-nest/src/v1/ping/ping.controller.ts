@@ -2,7 +2,7 @@ import { Controller, Get, Post } from '@nestjs/common';
 import { PingService } from './ping.service';
 
 // Main Route
-@Controller('v1/ping')
+@Controller('/api/v1/ping')
 export class PingController {
   constructor(private readonly pingService: PingService) {}
 

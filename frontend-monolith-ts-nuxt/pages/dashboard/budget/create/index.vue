@@ -38,7 +38,7 @@ const handleSubmit = async () => {
         date: conver.date,
         categoryId: formData.value.categoryId,
         note: formData.value.note
-      }
+      },
     }
   )
 

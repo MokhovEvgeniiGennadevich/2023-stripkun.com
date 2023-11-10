@@ -1,30 +1,90 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import DatabaseService from 'src/database.service';
-import { CreateBudgetV1DTO } from './budget.dto';
+import {
+  CreateBudgetV1DTO,
+  GetBudgetPaginationQueryV1DTO,
+  GetBudgetPaginationResponseDataV1DTO,
+} from './budget.dto';
 
 @Injectable()
 class BudgetV1Repository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  // get all categories from database
-  async get() {
-    // select categoryName
-    const response = await this.databaseService.runQuery(`
+  // REST API / CRUD
+  // get budget items with pagination
+  // total - total categories
+  // page - current page
+  // pageSize - page size
+  // lastPage - last page number
+  async get(getBudgetPaginationQueryV1DTO: GetBudgetPaginationQueryV1DTO) {
+    let getPages = {
+      total: 0,
+      page: getBudgetPaginationQueryV1DTO.page,
+      limit: getBudgetPaginationQueryV1DTO.limit,
+      data: [GetBudgetPaginationResponseDataV1DTO],
+    };
+
+    // count
+    try {
+      const budgetCount = await this.databaseService.runQuery(`
+        SELECT COUNT(id) FROM budget
+      `);
+
+      if (!budgetCount.rows[0].count) {
+        return {
+          message: 'database',
+        };
+      }
+
+      getPages.total = budgetCount.rows[0].count;
+    } catch (error) {
+      return {
+        message: 'database',
+      };
+    }
+
+    // Check if offset if less than TOTAL
+    if (getPages.total < getPages.page * getPages.limit) {
+      return {
+        message: 'database',
+      };
+    }
+
+    try {
+      // select
+      const response = await this.databaseService.runQuery(
+        `
       SELECT budget.id, summ, category_id, date, note FROM budget
       LEFT JOIN budget_summ ON budget_summ.id = budget.id
       LEFT JOIN budget_category ON budget_category.id = budget.id
       LEFT JOIN budget_date ON budget_date.id = budget.id
       LEFT JOIN budget_note ON budget_note.id = budget.id
-    `);
+      LIMIT $1 OFFSET $2
+    `,
+        [getPages.limit, getPages.page * getPages.limit],
+      );
 
-    if (response.rows.length === 0) {
+      if (response.rows.length === 0) {
+        return {
+          message: 'database',
+        };
+      }
+
+      getPages.data = response.rows;
+    } catch (error) {
       return {
-        message: 'error',
+        message: 'database',
       };
     }
 
-    return response.rows;
+    // Result Response
+    const ResultResponse = {
+      pagination: { total: getPages.total },
+      data: getPages.data,
+    };
+
+    return ResultResponse;
   }
 
   async create(createBudgetV1Dto: CreateBudgetV1DTO) {

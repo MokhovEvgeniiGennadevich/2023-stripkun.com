@@ -19,7 +19,7 @@ npm i class-validator
 ## [Generate resource ](https://docs.nestjs.com/recipes/crud-generator)
 
 ```sh
-nest g resource items
+nest g resource userV1
 ```
 
 command not only generates all the NestJS building blocks (module, service, controller classes) but also an entity class, DTO classes as well as the testing (.spec) files.
