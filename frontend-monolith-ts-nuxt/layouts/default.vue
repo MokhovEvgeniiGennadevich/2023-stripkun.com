@@ -9,6 +9,8 @@ const colorMode = useColorMode()
   <header>
     <div class="logo" title="Финансовый стриптиз">
       <NuxtLink to="/">Strip<span>Kun</span></NuxtLink>
+
+      <NuxtLink to="/ex">ex</NuxtLink>
     </div>
 
     <template v-if="userStore.user.login">
