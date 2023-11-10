@@ -20,6 +20,7 @@ jobs:
           node-version: 20
           # cache: "npm"
 
+      # Nuxt 3
       # Install dependencies
       - name: install
         working-directory: ./frontend-monolith-ts-nuxt
@@ -35,4 +36,22 @@ jobs:
 
       - name: Build
         working-directory: ./frontend-monolith-ts-nuxt
+        run: npm run build
+
+      # Next 14
+      # Install dependencies
+      - name: install
+        working-directory: ./frontend-monolith-nextjs14
+        run: npm i
+
+      # Run Linter
+      - name: lint
+        working-directory: ./frontend-monolith-nextjs14
+        run: npm run lint
+
+      - name: Sync Status
+        run: git diff --exit-code
+
+      - name: Build
+        working-directory: ./frontend-monolith-nextjs14
         run: npm run build
