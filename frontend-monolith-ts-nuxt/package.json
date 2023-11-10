@@ -12,8 +12,15 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.0.0",
+    "@nuxtjs/color-mode": "^3.3.0",
     "nuxt": "^3.8.0",
+    "sass": "^1.69.5",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "jwt-decode": "^4.0.0",
+    "pinia": "^2.1.7"
   }
 }
