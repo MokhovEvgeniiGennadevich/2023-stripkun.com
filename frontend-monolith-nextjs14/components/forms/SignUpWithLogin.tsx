@@ -11,6 +11,12 @@ const validationSchema = object().shape({
   password_confirm: string().trim().required().min(1),
 });
 
+type FormData = {
+  login: string;
+  password: string;
+  password_confirm: string;
+};
+
 export default function SignUpWithLoginForm<NextPage>() {
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -21,7 +27,7 @@ export default function SignUpWithLoginForm<NextPage>() {
     useForm(formOptions);
   const { errors } = formState;
 
-  function onSubmit(data) {
+  function onSubmit(data: FormData) {
     // display form data on success
     alert(
       "SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4)
