@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./normalizer.css";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,6 +27,11 @@ export default function RootLayout({
             <a href='/version'>Version</a>
           </li>
         </ul>
+        <div>
+          <Link href='/auth/sign-up-with-login'>
+            Регистрация
+          </Link>
+        </div>
         {children}
       </body>
     </html>
