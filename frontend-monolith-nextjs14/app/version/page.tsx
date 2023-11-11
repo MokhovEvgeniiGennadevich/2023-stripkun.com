@@ -6,10 +6,19 @@ export default function VersionPage() {
       <p>
         Ночь, улица, фонарь. Переход с Nuxt 3 на Next 14
       </p>
+      <p>
+        Next 14: Formik: оказался говном или неверная
+        реализация. Ставим react-hook-form
+      </p>
+      <p>
+        react-hook-form пока что отрабатывает только на
+        Submit формы, но не работает при onChange
+      </p>
+
       <h2>0.1.8 [2023-11-10]</h2>
       <p>
         Прошли курсы vuemastery и поделали формы. Валидация
-        с помощью yup, работа с формами через vee-validate
+        с помощью yup, работа с формами через vee-validate.
       </p>
       <p>
         Прошли курсы vuemastery и разорались в разнице между
