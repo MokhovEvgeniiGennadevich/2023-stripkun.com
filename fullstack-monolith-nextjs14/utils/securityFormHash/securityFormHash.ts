@@ -5,9 +5,9 @@ export interface SecurityFormHashRequest {
   formFileds: string[] | null;
 }
 
-interface SecurityFormHashResponse {
-  formHash: string;
-  formTimeStamp: number;
+export interface SecurityFormHashResponse {
+  hash: string;
+  timestamp: string;
 }
 
 const securityFormHashKey =
@@ -17,18 +17,12 @@ if (!securityFormHashKey) {
   throw new Error("SECURITY_FORM_HASH_KEY is not set");
 }
 
-/**
- * Generates a security form hash based on the provided request.
- *
- * @param {SecurityFormHashRequest} request - The request object containing the necessary information to generate the hash.
- * @return {SecurityFormHashResponse} - The response object containing the generated form hash and timestamp.
- */
-
 const securityFormHash = (
   request: SecurityFormHashRequest
 ): SecurityFormHashResponse => {
   // formTimeStamp
   const formTimeStamp = Date.now();
+  const formTimeStampString = String(formTimeStamp);
 
   // formUrl
   const formUrl = request.formUrl;
@@ -43,12 +37,15 @@ const securityFormHash = (
   const formHash = crypto
     .createHmac("sha512", securityFormHashKey)
     .update(
-      formUrl + String(formTimeStamp) + formFileds,
+      formUrl + formTimeStampString + formFileds,
       "utf-8"
     )
     .digest("hex");
 
-  return { formHash, formTimeStamp };
+  return {
+    hash: formHash,
+    timestamp: formTimeStampString,
+  };
 };
 
 export default securityFormHash;
