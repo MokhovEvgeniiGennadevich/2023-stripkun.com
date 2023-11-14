@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import type { SecurityFormHash, SecurityFormHashRequest, SecurityFormHashResponse } from '~/plugins/securityFormHash.server';
+
 
 // Security Form Hash
 const securityFormHashRequest = {
   formUrl: "/api",
-  formFileds: null,
+  formFields: null,
 };
 
-const { csrfHash } = useCsrfHash(securityFormHashRequest);
+const csrfHash = useState(() => {
+  const app = useNuxtApp()
+  return (app.$securityFormHash as SecurityFormHash)(securityFormHashRequest) as SecurityFormHashResponse;
+})
+
 </script>
 
 <template>
