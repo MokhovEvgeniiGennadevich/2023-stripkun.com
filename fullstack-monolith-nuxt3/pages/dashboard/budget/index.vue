@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { generateHash } from '~/composables/securityHash';
 
 type budgetDto = {
   pagination: {
@@ -8,35 +7,13 @@ type budgetDto = {
   data: []
 };
 
-//////////////////////////////////////////////////////////////////////////
-// const crypto = require("crypto");
 
-// решение от izede
-// useState исполняется только один раз и на сервере
-// const hash_time = useState("hash_time", () => {
-//   return Date.now()
-// })
-
-// const hash = useState("hash", () => {
-//   return crypto
-//     .createHmac("sha512", "password")
-//     .update(
-//       "/v1/budget/getpage0limit1" +
-//       String(hash_time.value),
-//       "utf-8"
-//     )
-//     .digest("hex");
-// })
 
 // 100% working code
 const hash_time = useState("hash_time", () => {
   return Date.now()
 })
 
-// ?? is working
-const hash = useState("hash", () => {
-  return generateHash("/api/v1/auth/sign-up-by-login", hash_time.value);
-})
 
 //////////////////////////////////////////////////////////////////////////
 const { data: budget, error } = await useFetch<budgetDto[]>(
@@ -47,8 +24,7 @@ const { data: budget, error } = await useFetch<budgetDto[]>(
     headers: {
       // CSRF: 
       "csrf": "222",
-      // HASH: Пользователь не может менять параметры запроса
-      "hash": hash,
+      // HASH: Пользователь не может менять параметры запроса,
     }
   }
 );
@@ -58,7 +34,7 @@ const { data: budget, error } = await useFetch<budgetDto[]>(
   <h1>Бюджет</h1>
 
   <p>Hash Time: {{ hash_time }}</p>
-  <p>Hash: {{ hash }}</p>
+  <p>Hash</p>
 
 
   <p>Budget Data: {{ budget }}</p>
@@ -66,3 +42,4 @@ const { data: budget, error } = await useFetch<budgetDto[]>(
 
   <NuxtLink to="/dashboard/budget/create">Добавить</NuxtLink>
 </template>
+~/composables/useCsrfHash

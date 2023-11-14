@@ -2,7 +2,7 @@ import crypto from "crypto";
 
 export interface SecurityFormHashRequest {
   formUrl: string;
-  formFileds: string[] | null;
+  formFields: string[] | null;
 }
 
 export interface SecurityFormHashResponse {
@@ -17,7 +17,7 @@ if (!securityFormHashKey) {
   throw new Error("SECURITY_FORM_HASH_KEY is not set");
 }
 
-const SecurityFormHash = (
+const securityFormHash = (
   request: SecurityFormHashRequest
 ): SecurityFormHashResponse => {
   // formTimeStamp
@@ -27,17 +27,17 @@ const SecurityFormHash = (
   // formUrl
   const formUrl = request.formUrl;
 
-  // formFileds
-  let formFileds: string = "";
-  if (request.formFileds) {
-    formFileds = request.formFileds.join("&");
+  // formFields
+  let formFields: string = "";
+  if (request.formFields) {
+    formFields = request.formFields.join("&");
   }
 
   // Generate hash
   const formHash = crypto
     .createHmac("sha512", securityFormHashKey)
     .update(
-      formUrl + formTimeStampString + formFileds,
+      formUrl + formTimeStampString + formFields,
       "utf-8"
     )
     .digest("hex");
@@ -48,4 +48,9 @@ const SecurityFormHash = (
   };
 };
 
-export default SecurityFormHash;
+export type SecurityFormHash = typeof securityFormHash;
+
+export default defineNuxtPlugin((nuxtApp) => {
+  // add $securityFormHash function to nuxtApp instance
+  nuxtApp.provide("securityFormHash", securityFormHash);
+});
