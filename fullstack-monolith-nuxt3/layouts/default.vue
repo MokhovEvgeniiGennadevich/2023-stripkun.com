@@ -9,8 +9,6 @@ const colorMode = useColorMode()
   <header>
     <div class="logo" title="Финансовый стриптиз">
       <a href="/">Strip<span>Kun</span></a>
-
-      <a href="/ex">ex</a>
     </div>
 
     <template v-if="userStore.user.login">
