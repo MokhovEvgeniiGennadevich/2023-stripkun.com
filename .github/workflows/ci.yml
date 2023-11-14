@@ -31,8 +31,8 @@ jobs:
         working-directory: ./fullstack-monolith-nuxt3
         run: npm run postinstall
 
-      # - name: Sync Status
-      #   run: git diff --exit-code
+      - name: Sync Status
+        run: git diff --exit-code
 
       - name: Build
         working-directory: ./fullstack-monolith-nuxt3
@@ -49,8 +49,8 @@ jobs:
         working-directory: ./fullstack-monolith-nextjs14
         run: npm run lint
 
-      # - name: Sync Status
-      #   run: git diff --exit-code
+      - name: Sync Status
+        run: git diff --exit-code
 
       - name: Build
         working-directory: ./fullstack-monolith-nextjs14

@@ -8,16 +8,14 @@ const colorMode = useColorMode()
 <template>
   <header>
     <div class="logo" title="Финансовый стриптиз">
-      <NuxtLink to="/">Strip<span>Kun</span></NuxtLink>
-
-      <NuxtLink to="/ex">ex</NuxtLink>
+      <a href="/">Strip<span>Kun</span></a>
     </div>
 
     <template v-if="userStore.user.login">
       <div>
 
         <template v-if="userStore.user.permissions.includes('dashboard.enter')">
-          <NuxtLink to="/dashboard">Админ</NuxtLink>
+          <a href="/dashboard">Админ</a>
         </template>
 
       </div>
@@ -25,13 +23,13 @@ const colorMode = useColorMode()
         Привет, {{ userStore.user.login }}
       </div>
       <div>
-        <NuxtLink to="/auth/sign-in-by-login">Выход</NuxtLink>
+        <a href="/auth/sign-in-by-login">Выход</a>
       </div>
     </template>
     <template v-else>
       <div>
-        <NuxtLink to="/auth/sign-in-by-login">Вход</NuxtLink> / <NuxtLink to="/auth/sign-up-by-login">Регистрация
-        </NuxtLink>
+        <a href="/auth/sign-in-by-login">Вход</a> / <a href="/auth/sign-up-by-login">Регистрация
+        </a>
       </div>
     </template>
   </header>
@@ -46,13 +44,13 @@ const colorMode = useColorMode()
     <li>
       <ul>
         <li>
-          <NuxtLink to="/dashboard/budget">Бюджет</NuxtLink>
+          <a href="/dashboard/budget">Бюджет</a>
         </li>
         <li>
-          <NuxtLink to="/dashboard/category">Категории</NuxtLink>
+          <a href="/dashboard/category">Категории</a>
         </li>
         <li>
-          <NuxtLink to="/dashboard/pages">Материалы</NuxtLink>
+          <a href="/dashboard/pages">Материалы</a>
         </li>
       </ul>
     </li>
@@ -61,13 +59,13 @@ const colorMode = useColorMode()
 
   <ul>
     <li>
-      <NuxtLink to="/">Главная</NuxtLink>
+      <a href="/">Главная</a>
     </li>
     <li>
-      <NuxtLink to="/version">Версия</NuxtLink>
+      <a href="/version">Версия</a>
     </li>
     <li>
-      <NuxtLink to="/about">About</NuxtLink>
+      <a href="/about">About</a>
     </li>
 
   </ul>
