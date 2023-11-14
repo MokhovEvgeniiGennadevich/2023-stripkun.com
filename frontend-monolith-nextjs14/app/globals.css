@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --secondary: #1e1e1e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,10 +15,17 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --secondary: #1e1e1e;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-end-rgb));
+}
+
+input {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-end-rgb));
+  border: 1px solid var(--secondary);
 }
