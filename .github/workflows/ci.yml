@@ -55,3 +55,6 @@ jobs:
       - name: Build
         working-directory: ./frontend-monolith-nextjs14
         run: npm run build
+        env: # Or as an environment variable
+          SECURITY_FORM_HASH_KEY:
+            ${{ secrets.TEST_SECURITY_FORM_HASH_KEY }}
