@@ -16,26 +16,27 @@ type categoryDto = {
   note: string;
 };
 
+// Зачем нам fetch backend API если можно юзать Prisma? Почему нет? Что такое Prisma? 
 const { data: categoriesFetch } = await useFetch<categoryDto[]>(
   "http://localhost:3001/v1/category/get"
 );
 
 const handleSubmit = async () => {
   // Convert data
-  const conver = {
+  const convert = {
     summ: Number(formData.value.summ),
     date: formData.value.date,
   }
 
-  alert(JSON.stringify(conver))
+  alert(JSON.stringify(convert))
 
   const { data: response } = await useFetch(
     "http://localhost:3001/v1/budget/create",
     {
       method: "post",
       body: {
-        summ: conver.summ,
-        date: conver.date,
+        summ: convert.summ,
+        date: convert.date,
         categoryId: formData.value.categoryId,
         note: formData.value.note
       },
@@ -46,7 +47,7 @@ const handleSubmit = async () => {
 }
 
 // Решение от fukushine
-const categories = computed(() => categoriesLtree(categoriesFetch.value))
+const categories = computed(() => categoriesTree(categoriesFetch.value))
 
 
 
