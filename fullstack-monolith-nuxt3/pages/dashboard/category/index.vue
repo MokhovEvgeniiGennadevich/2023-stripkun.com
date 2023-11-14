@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { generateHash, generateHashAndTime } from '~/composables/securityHash';
 
 type categoryDto = {
   id: string;
@@ -27,18 +26,12 @@ const categoriesTree = computed(() => categoriesLtree(categories.value))
 const hash_time = useState("hash_time", () => {
   return Date.now()
 })
-
-// ?? is working
-const hash = useState("hash", () => {
-  return generateHash(hash_time.value);
-})
 </script>
 
 <template>
   <h1>Категории дохода и расхода</h1>
 
   <p>Hash Time: {{ hash_time }}</p>
-  <p>Hash: {{ hash }}</p>
 
   <NuxtLink to="/dashboard/category/create">Добавить</NuxtLink>
 
@@ -78,3 +71,4 @@ const hash = useState("hash", () => {
   border-bottom: 1px solid #ccc;
 }
 </style>
+~/composables/useCsrfHash

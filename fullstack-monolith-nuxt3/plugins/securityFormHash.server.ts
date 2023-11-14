@@ -17,7 +17,7 @@ if (!securityFormHashKey) {
   throw new Error("SECURITY_FORM_HASH_KEY is not set");
 }
 
-const SecurityFormHash = (
+const securityFormHash = (
   request: SecurityFormHashRequest
 ): SecurityFormHashResponse => {
   // formTimeStamp
@@ -48,4 +48,9 @@ const SecurityFormHash = (
   };
 };
 
-export default SecurityFormHash;
+export type SecurityFormHash = typeof securityFormHash;
+
+export default defineNuxtPlugin((nuxtApp) => {
+  // add $securityFormHash function to nuxtApp instance
+  nuxtApp.provide("securityFormHash", securityFormHash);
+})
