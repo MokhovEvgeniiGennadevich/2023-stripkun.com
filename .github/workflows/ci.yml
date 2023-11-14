@@ -23,19 +23,19 @@ jobs:
       # Nuxt 3
       # Install dependencies
       - name: install
-        working-directory: ./fullstack-monolith-ts-nuxt
+        working-directory: ./fullstack-monolith-ts-nuxt3
         run: npm i
 
       # Generate types after installing dependencies
       - name: postinstall
-        working-directory: ./fullstack-monolith-ts-nuxt
+        working-directory: ./fullstack-monolith-ts-nuxt3
         run: npm run postinstall
 
       - name: Sync Status
         run: git diff --exit-code
 
       - name: Build
-        working-directory: ./fullstack-monolith-ts-nuxt
+        working-directory: ./fullstack-monolith-ts-nuxt3
         run: npm run build
 
       # Next 14
