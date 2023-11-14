@@ -9,7 +9,7 @@ type categoryDto = {
 // Client and Server Fetch
 // Protect this route
 
-const { data: categories } = await useFetch<categoryDto[]>(
+const { data: categoriesFetch } = await useFetch<categoryDto[]>(
   "/api/v1/category/get",
   {
     server: true
@@ -19,7 +19,9 @@ const { data: categories } = await useFetch<categoryDto[]>(
 // const categoriesTree = categoriesLtree(categories.value);
 
 // Решение от fukushine
-const categoriesTree = computed(() => categoriesLtree(categories.value))
+const categories = computed(() => categoriesTree(categoriesFetch.value))
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // 100% working code
@@ -36,7 +38,7 @@ const hash_time = useState("hash_time", () => {
   <NuxtLink to="/dashboard/category/create">Добавить</NuxtLink>
 
   <ul>
-    <li v-for="(category, index) in categoriesTree" :key="`first-${index}`">
+    <li v-for="(category, index) in categories" :key="`first-${index}`">
       <NuxtLink :to="`/dashboard/category/edit/${category.id[0]}`">
         {{ category.name[0] }}
       </NuxtLink>
