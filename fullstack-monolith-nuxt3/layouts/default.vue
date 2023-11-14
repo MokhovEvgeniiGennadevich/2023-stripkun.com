@@ -34,6 +34,10 @@ const colorMode = useColorMode()
     </template>
   </header>
 
+  <template v-if="userStore.user.login">
+    <a href="/dashboard/budget">Доходы и расходы</a> / <a href="/dashboard/category">Категории</a>
+  </template>
+
   <select v-model="colorMode.preference">
     <option value="system">System</option>
     <option value="light">Light</option>
