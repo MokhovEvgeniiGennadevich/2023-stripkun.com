@@ -18,8 +18,9 @@
     <li>Мы взяли React, пострадали</li>
     <li>Ушли на Vue SPA, бросили потому что нет SEO</li>
     <li>Взяли Next JS 13, пострадали</li>
-    <li>Ушли на Nuxt JS 3</li>
-    <li>Перешли опять на Next JS 14, потому что на Nuxt JS 3 я не смог реализовать Crypto Form Hashes.</li>
+    <li>Появился izede. Ушли на Nuxt JS 3</li>
+    <li>Перешли опять на Next JS 14, потому что на Nuxt JS 3 я не смог реализовать Crypto Form Hashes (убил на это
+      неделю).</li>
     <li>Ушли на Nuxt JS 3, потому что izede написал plugin и composable и показал что реализация на самом деле возможна и
       сказал что в Nuxt нет ничего невозможного</li>
   </ul>
@@ -37,32 +38,32 @@
     <br />
     Без composable обёртки
     <code>
-                          import type { SecurityFormHash, SecurityFormHashRequest, SecurityFormHashResponse } from '~/plugins/securityFormHash.server';
+                              import type { SecurityFormHash, SecurityFormHashRequest, SecurityFormHashResponse } from '~/plugins/securityFormHash.server';
 
-                          // Security Form Hash
-                          const securityFormHashRequest = {
-                            formUrl: "/api",
-                            formFields: null,
-                          };
+                              // Security Form Hash
+                              const securityFormHashRequest = {
+                                formUrl: "/api",
+                                formFields: null,
+                              };
 
-                          const csrfHash = useState(() => {
-                            const app = useNuxtApp()
-                            return (app.$securityFormHash as SecurityFormHash)(securityFormHashRequest) as SecurityFormHashResponse;
-                          })
-                        </code>
+                              const csrfHash = useState(() => {
+                                const app = useNuxtApp()
+                                return (app.$securityFormHash as SecurityFormHash)(securityFormHashRequest) as SecurityFormHashResponse;
+                              })
+                            </code>
 
     <br />
 
     С composable обёрткой
     <code>
-                          // Security Form Hash
-                          const securityFormHashRequest = {
-                            formUrl: "/api",
-                            formFields: null,
-                          };
+                              // Security Form Hash
+                              const securityFormHashRequest = {
+                                formUrl: "/api",
+                                formFields: null,
+                              };
 
-                          const { csrfHash } = useCsrfHash(securityFormHashRequest);
-                        </code>
+                              const { csrfHash } = useCsrfHash(securityFormHashRequest);
+                            </code>
   </p>
 
   <h2>0.1.9 [2023-11-11]</h2>

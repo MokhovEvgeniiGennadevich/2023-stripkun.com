@@ -1,3 +1,3 @@
 export default defineEventHandler((event) => {
-  event.context.auth = { user: 123 };
+  return { result: "success", message: "pong" };
 });
