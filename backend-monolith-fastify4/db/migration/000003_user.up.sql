@@ -27,7 +27,3 @@ CREATE TABLE IF NOT EXISTS "users_sign_up_date" (
   "date" date NOT NULL DEFAULT (CURRENT_DATE)
 )
 
-CREATE TABLE IF NOT EXISTS "users_sessions" (
-  "id" uuid PRIMARY KEY NOT NULL,
-  "sessionId" uuid NOT NULL,
-);
