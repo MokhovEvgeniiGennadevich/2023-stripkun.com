@@ -10,6 +10,14 @@ module.exports = async function (fastify, opts) {
       login: "",
     };
 
+    //
+    let tokens = {
+      access_token: "",
+      access_token_payload: "",
+      refresh_token: "",
+      refresh_token_payload: "",
+    };
+
     // Request: Validate: Field Types (string, number, object etc.)
 
     // Business logic
@@ -137,9 +145,104 @@ module.exports = async function (fastify, opts) {
       };
     }
 
-    // Storage: Create Refresh Token (Session)
+    // Access Token: Generate
+    try {
+      const access_token_payload = {
+        user_id: user.id,
+      };
 
-    // Cookie: Create Access Token
+      const access_token = await fastify.jwt.sign({
+        access_token_payload,
+      });
+
+      if (!access_token) {
+        return {
+          result: "error",
+          message: "jwt error",
+        };
+      }
+
+      tokens.access_token = access_token;
+      tokens.access_token_payload = access_token_payload;
+    } catch (error) {
+      return {
+        result: "error",
+        message: "jwt error",
+      };
+    }
+
+    // Refresh Token: Generate
+    try {
+      const refresh_token_payload = {
+        id: crypto.randomUUID(),
+        user_id: user.id,
+      };
+      const refresh_token = await fastify.jwt.sign({
+        refresh_token_payload,
+      });
+
+      if (!refresh_token) {
+        return {
+          result: "error",
+          message: "jwt error",
+        };
+      }
+
+      tokens.refresh_token = refresh_token;
+      tokens.refresh_token_payload = refresh_token_payload;
+    } catch (error) {
+      return {
+        result: "error",
+        message: "jwt error",
+      };
+    }
+
+    // Storage: Create Refresh Token (Store it in Session)
+    try {
+      const { rows } = await fastify.pg.query(
+        "INSERT INTO refresh_tokens (id, user_id, refresh_token) VALUES ($1, $2, $3) RETURNING refresh_token",
+        [
+          tokens.refresh_token_payload.id,
+          user.id,
+          tokens.refresh_token,
+        ]
+      );
+
+      if (!rows[0].refresh_token) {
+        return {
+          result: "error",
+          message: "database error",
+        };
+      }
+    } catch (error) {
+      const result = await fastify.pg.query("ROLLBACK");
+
+      return {
+        result: "error",
+        message: "database error",
+      };
+    }
+
+    try {
+      // Cookie: Create Access Token
+      response.setCookie(
+        "access_token",
+        tokens.access_token
+      );
+
+      // Cookie: Create Refresh Token
+      response.setCookie(
+        "refresh_token",
+        tokens.refresh_token
+      );
+    } catch (error) {
+      const result = await fastify.pg.query("ROLLBACK");
+
+      return {
+        result: "error",
+        message: "cookie error",
+      };
+    }
 
     // Storage: Transaction
     try {
