@@ -23,6 +23,18 @@ module.exports = async function (fastify, opts) {
     options: Object.assign({}, opts),
   });
 
+  // JWT Token Plugin
+  fastify.register(require("@fastify/jwt"), {
+    secret: process.env.JWT_TOKEN_SECRET,
+  });
+
+  // Cookie Plugin
+  fastify.register(require("@fastify/cookie"), {
+    secret: process.env.COOKIE_SECRET, // for cookies signature
+    hook: "onRequest", // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
+    parseOptions: {}, // options for parsing cookies
+  });
+
   // PostgreSQL
   fastify.register(require("@fastify/postgres"), {
     connectionString:
