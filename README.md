@@ -1,1 +1,1 @@
-# StripKun - Financial Streaptease
+# StripKun - Финансовый стриптиз
