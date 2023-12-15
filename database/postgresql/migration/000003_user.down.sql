@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS user_sign_up_date;
+DROP TABLE IF EXISTS user_password;
+DROP TABLE IF EXISTS user_login;
+DROP TABLE IF EXISTS user_slug;
+DROP TABLE IF EXISTS user;
