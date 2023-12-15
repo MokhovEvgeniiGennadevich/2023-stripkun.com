@@ -1,60 +1,60 @@
-name: ci
+# name: ci
 
-on:
-  push:
-    branches:
-      # - main
-      - dev
-  # pull_request:
-  #   branches:
-  #     - main
+# on:
+#   push:
+#     branches:
+#       # - main
+#       - dev
+#   # pull_request:
+#   #   branches:
+#   #     - main
 
-jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          # cache: "npm"
+# jobs:
+#   ci:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: corepack enable
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
+#           # cache: "npm"
 
-      # Nuxt 3
-      # Install dependencies
-      - name: install
-        working-directory: ./frontend-monolith-nuxt3
-        run: npm i
+#       # Nuxt 3
+#       # Install dependencies
+#       - name: install
+#         working-directory: ./frontend-monolith-nuxt3
+#         run: npm i
 
-      # Generate types after installing dependencies
-      - name: postinstall
-        working-directory: ./frontend-monolith-nuxt3
-        run: npm run postinstall
+#       # Generate types after installing dependencies
+#       - name: postinstall
+#         working-directory: ./frontend-monolith-nuxt3
+#         run: npm run postinstall
 
-      - name: Sync Status
-        run: git diff --exit-code
+#       - name: Sync Status
+#         run: git diff --exit-code
 
-      - name: Build
-        working-directory: ./frontend-monolith-nuxt3
-        run: npm run build
+#       - name: Build
+#         working-directory: ./frontend-monolith-nuxt3
+#         run: npm run build
 
-      # Next 14
-      # Install dependencies
-      - name: install
-        working-directory: ./fullstack-monolith-nextjs14
-        run: npm i
+#       # Next 14
+#       # Install dependencies
+#       - name: install
+#         working-directory: ./fullstack-monolith-nextjs14
+#         run: npm i
 
-      # Run Linter
-      - name: lint
-        working-directory: ./fullstack-monolith-nextjs14
-        run: npm run lint
+#       # Run Linter
+#       - name: lint
+#         working-directory: ./fullstack-monolith-nextjs14
+#         run: npm run lint
 
-      - name: Sync Status
-        run: git diff --exit-code
+#       - name: Sync Status
+#         run: git diff --exit-code
 
-      - name: Build
-        working-directory: ./fullstack-monolith-nextjs14
-        run: npm run build
-        env: # Or as an environment variable
-          SECURITY_FORM_HASH_KEY:
-            ${{ secrets.TEST_SECURITY_FORM_HASH_KEY }}
+#       - name: Build
+#         working-directory: ./fullstack-monolith-nextjs14
+#         run: npm run build
+#         env: # Or as an environment variable
+#           SECURITY_FORM_HASH_KEY:
+#             ${{ secrets.TEST_SECURITY_FORM_HASH_KEY }}

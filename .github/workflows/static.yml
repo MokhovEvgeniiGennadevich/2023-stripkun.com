@@ -39,12 +39,11 @@ jobs:
 
       # Запускаем docker-команду
       - name: Build and push
-        id: docker_build
         uses: docker/build-push-action@v4
         with:
           # Путь в котором будут выполняться комманды для сборки
-          context: .
-          file: ./Dockerfile
+          context: ./static-website
+          file: ./static-website/docker/prod/Dockerfile
           push: true
           tags: docker-registry.toxiccat.ru/stripkun-static-website:latest
 
