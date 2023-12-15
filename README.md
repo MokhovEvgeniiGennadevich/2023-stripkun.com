@@ -1,1 +1,25 @@
-# StripKun - Financial Streaptease
+# [StripKun](https://stripkun.com/) - Финансовый стриптиз
+
+Проект "Финансовый стриптиз" разрабатывался с целью личного учета доходов и расходов.
+
+Так же целью проекта, косвенно, является изучение JavaScript/TypeScript, а точнее - FrontEnd'a.
+
+## Статичный вёб-сайт
+
+Целью статичного вёб-сайт являлось изучение CI/CD 
+
+* Пуш в `DEV` ветку
+* QA автоматические тесты
+* Build Docker-контейнера
+* Обновление Docker-контейнера в Docker-Registry
+* Автоматический pull-request
+* Автоматический merge-request
+
+### Рабочий пример
+
+[StripKun - статичный вёб-сайт](https://stripkun.com/)
+
+### Стэк
+
+* FrontEnd: HTML5
+* Контейнеризация: Docker
