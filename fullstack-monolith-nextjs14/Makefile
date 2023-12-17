@@ -1,5 +1,5 @@
 # Имя базы данных
-DB_NAME=fullstack_monolith_nextjs14
+DB_NAME=stripkun
 
 # URL для подключения к базе данных
 DB_URL=postgresql://root:root@localhost:5432/$(DB_NAME)?sslmode=disable
